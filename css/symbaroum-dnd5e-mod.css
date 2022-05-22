@@ -51,7 +51,7 @@
 
 /* Character/NPC Sheet Styling  */
 /* ************************ */
-.syb5e.sheet.actor .editor .tox-toolbar-overlord,
+/* .syb5e.sheet.actor .editor .tox-toolbar-overlord,
 .syb5e.sheet.actor .editor .tox-toolbar__primary {
   background-color: #fff;
   border-bottom: solid 1px black;
@@ -64,7 +64,7 @@
 .syb5e.sheet.actor .dnd5e-border {
   border: 2px groove #eeede0;
   border-radius: 4px;
-}
+} */
 
 /* End Character/NPC Sheet Styling  */
 /* ************************ */
@@ -72,16 +72,17 @@
 /* Character Sheet Styling  */
 /* ************************ */
 
-.app.window-app.syb5e.actor.character.sheet {
-  /* background: chartreuse; */
+/* .app.window-app.syb5e.actor.character.sheet {
+
   border: var(--syb5e-pc-sheet-border);
   border-image: var(--syb5e-pc-border-image);
   border-image-slice: 50%;
   border-image-width: 100%;
   min-width: 764px;
 }
+
 .syb5e.sheet.actor.character .window-content {
-  /* background: chartreuse; */
+
   background: var(--syb5e-pc-background-image);
   color: var(--syb5e-pc-color);
   font-family: var(--syb5e-pc-font);
@@ -180,13 +181,13 @@
 }
 
 .syb5e.sheet.actor.character ::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
+
   color: var(--syb5e-pc-color);
-  opacity: 0.75; /*Firefox */
+  opacity: 0.75;
 }
 
 .syb5e.sheet.actor.character ::-ms-input-placeholder {
-  /* Microsoft Edge */
+
   color: var(--syb5e-pc-color);
 }
 
@@ -265,7 +266,7 @@
 a.content-link,
 a.inline-roll {
   color: var(--syb5e-pc-item-link);
-  /* color: black; */
+
 }
 
 .syb5e.sheet.actor.character .tag {
@@ -274,15 +275,15 @@ a.inline-roll {
 
 .syb5e.sheet.actor.character textarea {
   color: var(--syb5e-npc-color);
-}
+} */
 
 /* End of Character Sheet Styling  */
 /* ************************ */
 
 /* NPC Sheet Styling  */
 /* ************************ */
-.app.window-app.syb5e.actor.npc.sheet {
-  /* background: chartreuse; */
+/* .app.window-app.syb5e.actor.npc.sheet {
+
   border: var(--syb5e-npc-sheet-border);
   border-image: var(--syb5e-npc-border-image);
   border-image-slice: 50%;
@@ -291,7 +292,7 @@ a.inline-roll {
 }
 
 .syb5e.sheet.actor.npc .window-content {
-  /* background: chartreuse; */
+
   background: var(--syb5e-npc-background-image);
   color: var(--syb5e-npc-color);
   font-family: var(--syb5e-npc-font);
@@ -392,13 +393,13 @@ a.inline-roll {
 }
 
 .syb5e.sheet.actor.npc ::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
+
   color: var(--syb5e-npc-color);
-  opacity: 0.75; /*Firefox */
+  opacity: 0.75;
 }
 
 .syb5e.sheet.actor.npc ::-ms-input-placeholder {
-  /* Microsoft Edge */
+
   color: var(--syb5e-npc-color);
 }
 
@@ -495,7 +496,7 @@ a.inline-roll {
 
 .syb5e.sheet.actor.npc textarea {
   color: var(--syb5e-npc-color);
-}
+} */
 /* End of NPC Sheet Styling  */
 /* ************************ */
 
