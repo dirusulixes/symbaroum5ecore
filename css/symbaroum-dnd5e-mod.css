@@ -500,30 +500,30 @@ a.inline-roll {
 /* End of NPC Sheet Styling  */
 /* ************************ */
 
-.journal-sheet form {
+/* .journal-sheet form {
   display: flex;
   flex-direction: column;
   background-image: url(../images/journal/foreground2a.png);
   background-size: 100% 100%;
-}
+} */
 .journal-sheet form select {
   display: none;
 }
-.app.window-app.sheet.journal-sheet {
+/* .app.window-app.sheet.journal-sheet {
   color: hsl(0, 0%, 0%);
   border: 9px solid transparent;
   border-image: url(../images/journal/sym-journal-border.webp) 108/3 repeat;
   border-image-outset: 2;
   min-width: 900px !important;
-}
+} */
 
 .journal-sheet form .editor {
   height: 100%;
 }
 
-.app.window-app.journal-sheet.sheet.journal-sheet .window-header {
+/* .app.window-app.journal-sheet.sheet.journal-sheet .window-header {
   background-image: url(../images/journal/foreground.jpg);
-}
+} */
 .app.window-app.journal-sheet.sheet.journal-sheet.window-app.minimized .window-header {
   border: none;
   line-height: 14px;
@@ -538,7 +538,7 @@ a.inline-roll {
   font-family: 'Primitive';
   font-size: 3rem;
   text-align: center;
-  background-image: url(../images/journal/foreground.jpg);
+  /* background-image: url(../images/journal/foreground.jpg); */
   border: 1px solid transparent;
   border-image: url(../images/journal/sym-journal-header.webp);
   border-image-slice: 50%;
