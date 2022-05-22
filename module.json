@@ -1,6 +1,6 @@
 {
-    "name": "symbaroum5ecore",
-    "title": "Ruins of Symbaroum 5E - Core",
+    "name": "symbaroum5ecore-fork",
+    "title": "Ruins of Symbaroum 5E - Core (Fork)",
     "description": "Implements the core rules mechanics of the Ruins of Symbaroum conversion for 5th Edition.",
     "author": "Matthew Haentschke, Paul Watson",
     "version": "1.0.0",
@@ -28,7 +28,7 @@
         "label": "RoS CORE - How to",
         "path": "packs/ros-core-user-guide-journal.db",
         "entity": "JournalEntry",
-        "module": "symbaroum5ecore",
+        "module": "symbaroum5ecore-fork",
         "private": false
       },
       {
@@ -36,7 +36,7 @@
         "label": "RoS CORE - GM Aids",
         "path": "packs/ros-core-scenes.db",
         "entity": "Scene",
-        "module": "symbaroum5ecore"
+        "module": "symbaroum5ecore-fork"
       }
     
     ],  

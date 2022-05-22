@@ -1,3 +1,5 @@
+This is just a local fork of the official module to implement some changes for my own campaign and preferred foundry setup.
+
 # Ruins of Symbaroum Core Rules (A DnD5e Total Conversion)
 # Basic concepts and initial setup
 
