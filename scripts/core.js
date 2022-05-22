@@ -48,7 +48,7 @@ const SUB_MODULES = {
 
 const SUB_APPS = {
   SybRestDialog,
-  SybConfigApp
+  // SybConfigApp
 }
 
 /*
