@@ -151,14 +151,14 @@ export class SYB5E {
       },
     };
 
-    game.settings.registerMenu('symbaroum5ecore', 'symbaroumSettings', {
+/*     game.settings.registerMenu('symbaroum5ecore', 'symbaroumSettings', {
       name: 'SYB5E.setting.config-menu-label.name',
       label: 'SYB5E.setting.config-menu-label.name',
       hint: 'SYB5E.setting.config-menu-label.hint',
       icon: 'fas fa-palette',
       type: SybConfigApp,
       restricted: false,
-    });
+    }); */
 
     COMMON.applySettings(settingsData);
   }
