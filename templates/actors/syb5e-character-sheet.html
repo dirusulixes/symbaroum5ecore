@@ -2,29 +2,29 @@
 
     {{!-- Sheet Header --}}
     <header class="sheet-header flexrow">
-        <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+        <img class="profile" src="{{actor.img}}" data-tooltip="{{actor.name}}" data-edit="img"/>
 
         <section class="header-details flexrow">
-            {{> "systems/dnd5e/templates/actors/parts/actor-warnings.html"}}
+            {{> "dnd5e.actor-warnings"}}
 
             <h1 class="charname">
                 <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'DND5E.Name' }}"/>
             </h1>
 
             <aside class="header-exp flexcol">
-                <div class="charlevel" title="{{multiclassLabels}}">
-                    <label>{{ localize "DND5E.Level" }} {{data.details.level}}</label>
+                <div class="charlevel" data-tooltip="{{multiclassLabels}}">
+                    <label>{{ localize "DND5E.Level" }} {{system.details.level}}</label>
                     <span class="levels">{{classLabels}}</span>
                 </div>
 
                 {{#unless disableExperience}}
                 <div class="experience flexrow">
-                    <input name="data.details.xp.value" type="text" value="{{data.details.xp.value}}" placeholder="0" data-dtype="Number"/>
+                    <input type="text" name="system.details.xp.value" value="{{system.details.xp.value}}" placeholder="0" data-dtype="Number">
                     <span class="sep">/</span>
-                    <span class="max">{{data.details.xp.max}}</span>
+                    <span class="max">{{system.details.xp.max}}</span>
                 </div>
                 <div class="xpbar">
-                    <span class="bar" style="width: {{data.details.xp.pct}}%"></span>
+                    <span class="bar" style="width: {{system.details.xp.pct}}%"></span>
                 </div>
                 {{/unless}}
             </aside>
@@ -32,14 +32,18 @@
             {{!-- Character Summary --}}
             <ul class="summary flexrow">
                 <li>
-                    <input type="text" name="data.details.race" value="{{data.details.race}}" placeholder="{{ localize 'SYB5E.Sheet.Origin' }}"/>
+                    <input type="text" name="system.details.race" value="{{system.details.race}}" placeholder="{{ localize 'SYB5E.Sheet.Origin' }}"/>
                 </li>
                 <li>
-                    <input type="text" name="data.details.background" value="{{data.details.background}}" placeholder="{{ localize 'DND5E.Background' }}"/>
+                    {{#if labels.background}}
+                        <span data-tooltip="DND5E.Background">{{labels.background}}</span>
+                    {{else}}
+                        <input type="text" name="system.details.background" value="{{system.details.background}}" placeholder="{{ localize 'DND5E.Background' }}"/>
+                    {{/if}}
                 </li>
                 <!--
                 <li>
-                    <input type="text" name="data.details.alignment" value="{{data.details.alignment}}" placeholder="{{ localize 'DND5E.Alignment' }}"/>
+                    <input type="text" name="system.details.alignment" value="{{system.details.alignment}}" placeholder="{{ localize 'DND5E.Alignment' }}"/>
                 </li>
                 -->
                 <li class="proficiency">
@@ -50,64 +54,65 @@
             {{!-- Header Attributes --}}
             <ul class="attributes flexrow">
                 <li class="attribute health">
-                    <h4 class="attribute-name box-title">{{ localize "DND5E.HitPoints" }}</h4>
+                    <h4 class="attribute-name box-title">{{localize "DND5E.HitPoints"}}</h4>
+                    <a class="config-button" data-action="hit-points" data-tooltip="DND5E.HitPointsConfig">
+                        <i class="fas fa-cog"></i>
+                    </a>
                     <div class="attribute-value multiple">
-                        <input name="data.attributes.hp.value" type="text"
-                               value="{{data.attributes.hp.value}}" placeholder="10"
-                               data-dtype="Number" title="{{localize 'DND5E.HitPointsCurrent'}}">
+                        <input name="system.attributes.hp.value" type="text" value="{{hp.value}}" placeholder="10"
+                            data-tooltip="DND5E.HitPointsCurrent" data-dtype="Number">
                         <span class="sep"> / </span>
-                        <input name="data.attributes.hp.max" type="text"
-                               value="{{data.attributes.hp.max}}" placeholder="10" 
-                               data-dtype="Number" title="{{localize 'DND5E.HitPointsMax'}}">
+                        <span data-tooltip="{{#if hp.max}}DND5E.HitPointsOverride{{else}}DND5E.HitPointsMax{{/if}}">
+                            {{hp.max}}
+                        </span>
                     </div>
                     <footer class="attribute-footer">
-                        <input name="data.attributes.hp.temp" type="text" class="temphp"
-                               placeholder="+{{ localize 'DND5E.Temp' }}"
-                               value="{{data.attributes.hp.temp}}" data-dtype="Number"
-                               title="{{localize 'DND5E.HitPointsTemp'}}">
-                        <input name="data.attributes.hp.tempmax" type="text" class="temphp"
-                               placeholder="+{{ localize 'DND5E.Max' }}"
-                               value="{{data.attributes.hp.tempmax}}" data-dtype="Number"
-                               title="{{localize 'DND5E.HitPointsTempMax'}}">
+                        <input name="system.attributes.hp.temp" type="text" class="temphp"
+                            placeholder="+{{ localize 'DND5E.Temp' }}" value="{{hp.temp}}"
+                            data-tooltip="DND5E.HitPointsTemp" data-dtype="Number">
+                        <input name="system.attributes.hp.tempmax" type="text" class="temphp"
+                            placeholder="+{{ localize 'DND5E.Max' }}" value="{{hp.tempmax}}"
+                            data-tooltip="DND5E.HitPointsTempMax" data-dtype="Number">
                     </footer>
                 </li>
 
                 <li class="attribute hit-dice">
-                    <h4 class="attribute-name box-title">
-                        {{ localize "DND5E.HitDice" }}
-                        <a class="config-button" data-action="hit-dice" title="{{localize 'DND5E.HitDiceConfig'}}"><i class="fas fa-cog"></i></a>
-                    </h4>
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.HitDice" }}</h4>
+                    <a class="config-button" data-action="hit-dice" data-tooltip="DND5E.HitDiceConfig">
+                        <i class="fas fa-cog"></i>
+                    </a>
                     <div class="attribute-value multiple">
                         <label class="hit-dice">
-                            <span title="{{localize 'DND5E.HitDiceRemaining'}}">{{data.attributes.hd}}</span>
+                            <span data-tooltip="DND5E.HitDiceRemaining">{{system.attributes.hd}}</span>
                             <span class="sep"> / </span>
-                            <span title="{{localize 'DND5E.HitDiceMax'}}">{{data.details.level}}</span>
+                            <span data-tooltip="DND5E.HitDiceMax">{{system.details.level}}</span>
                         </label>
                     </div>
                     <footer class="attribute-footer">
-                        <a class="rest short-rest" title="{{localize 'DND5E.ShortRest'}}">{{ localize "DND5E.RestS" }}</a>
-                        <a class="rest long-rest" title="{{localize 'DND5E.LongRest'}}">{{ localize "DND5E.RestL" }}</a>
+                        <a class="rest short-rest" data-tooltip="DND5E.ShortRest">{{localize "DND5E.RestS"}}</a>
+                        <a class="rest long-rest" data-tooltip="DND5E.LongRest">{{localize "DND5E.RestL"}}</a>
                     </footer>
                 </li>
 
                 <li class="attribute armor">
-                    <h4 class="attribute-name box-title">
-                        {{ localize "DND5E.ArmorClass" }}
-                        <a class="config-button" data-action="armor" title="{{localize 'DND5E.ArmorConfig'}}"><i class="fas fa-cog"></i></a>
-                    </h4>
-                    <div class="attribute-value attributable" data-property="attributes.ac">
-                        <span>{{data.attributes.ac.value}}</span>
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }}</h4>
+                    <a class="config-button" data-action="armor" data-tooltip="DND5E.ArmorConfig">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                    <div class="attribute-value" data-attribution="attributes.ac"
+                        data-attribution-caption="DND5E.ArmorClass" data-tooltip-direction="DOWN">
+                        <span>{{system.attributes.ac.value}}</span>
                     </div>
                     <footer class="attribute-footer">
-                        <span class="spell-dc">{{localize "DND5E.SpellDC"}} {{data.attributes.spelldc}}</span>
+                        <span class="spell-dc">{{localize "DND5E.SpellDC"}} {{system.attributes.spelldc}}</span>
                     </footer>
                 </li>
 
                 <li class="attribute movement">
-                    <h4 class="attribute-name box-title">
-                        {{ localize "DND5E.Movement" }}
-                        <a class="config-button" data-action="movement" title="{{localize 'DND5E.MovementConfig'}}"><i class="fas fa-cog"></i></a>
-                    </h4>
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.Movement" }}</h4>
+                    <a class="config-button" data-action="movement" data-tooltip="DND5E.MovementConfig">
+                        <i class="fas fa-cog"></i>
+                    </a>
                     <div class="attribute-value">
                         <span>{{movement.primary}}</span>
                     </div>
@@ -117,15 +122,15 @@
                 </li>
 
                 <li class="attribute initiative">
-                    <h4 class="attribute-name box-title rollable" data-action="rollInitiative">{{ localize "DND5E.Initiative" }}</h4>
+                    <h4 class="attribute-name box-title rollable" data-action="rollInitiative">
+                        {{ localize "DND5E.Initiative" }}
+                    </h4>
+                    <a class="config-button" data-action="initiative" data-tooltip="DND5E.InitiativeConfig">
+                        <i class="fas fa-cog"></i>
+                    </a>
                     <div class="attribute-value">
-                        <span>{{numberFormat data.attributes.init.total decimals=0 sign=true}}</span>
+                        <span>{{numberFormat system.attributes.init.total decimals=0 sign=true}}</span>
                     </div>
-                    <footer class="attribute-footer">
-                        <span>{{ localize "DND5E.Modifier" }}</span>
-                        <input name="data.attributes.init.value" type="text" data-dtype="Number" placeholder="0"
-                               value="{{numberFormat data.attributes.init.value decimals=0 sign=true}}"/>
-                    </footer>
                 </li>
             </ul>
         </section>
@@ -148,35 +153,53 @@
 
             {{!-- Ability Scores --}}
             <ul class="ability-scores flexrow">
-            {{#each data.abilities as |ability id|}}
+            {{#each abilities as |ability id|}}
                 <li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
-                    <input class="ability-score" name="data.abilities.{{id}}.value" type="number" value="{{ability.value}}" placeholder="10"/>
+                    <input type="text" name="system.abilities.{{id}}.value" value="{{ability.value}}"
+                        class="ability-score" placeholder="10" data-dtype="Number">
                     <div class="ability-modifiers flexrow">
-                        <span class="ability-mod" title="{{ localize 'DND5E.Modifier' }}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-                        <input type="hidden" name="data.abilities.{{id}}.proficient" value="{{ability.baseProf}}" data-dtype="Number"/>
-                        <a class="proficiency-toggle ability-proficiency" title="{{ localize 'DND5E.Proficiency' }}">{{{ability.icon}}}</a>
-                        <span class="ability-save" title="{{ localize 'DND5E.SavingThrow' }}">{{numberFormat ability.save decimals=0 sign=true}}</span>
+                        <span class="ability-mod" data-tooltip="DND5E.Modifier">
+                            {{numberFormat ability.mod decimals=0 sign=true}}
+                        </span>
+                        <input type="hidden" name="system.abilities.{{id}}.proficient" value="{{ability.baseProf}}"
+                               data-dtype="Number"/>
+                        <a class="proficiency-toggle ability-proficiency" data-tooltip="DND5E.Proficiency">
+                            {{{ability.icon}}}
+                        </a>
+                        <span class="ability-save" data-tooltip="DND5E.SavingThrow">
+                            {{numberFormat ability.save decimals=0 sign=true}}
+                        </span>
                     </div>
-                    <a class="config-button" data-action="ability" title="{{localize 'DND5E.AbilityConfigure'}}"><i class="fas fa-cog"></i></a>
+                    <a class="config-button" data-action="ability" data-tooltip="DND5E.AbilityConfigure">
+                        <i class="fas fa-cog"></i>
+                    </a>
                 </li>
             {{/each}}
             </ul>
 
             {{!-- Skills --}}
             <ul class="skills-list">
-            {{#each config.skills as |label s|}}
-            {{#with (lookup ../data.skills s) as |skill|}}
+            {{#each config.skills as |obj s|}}
+            {{#with (lookup ../skills s) as |skill|}}
                 <li class="skill flexrow {{#if skill.value}}proficient{{/if}}" data-skill="{{s}}">
-                    <input type="hidden" name="data.skills.{{s}}.value" value="{{skill.baseValue}}" data-dtype="Number"/>
-                    <a class="proficiency-toggle skill-proficiency" title="{{skill.hover}}">{{{skill.icon}}}</a>
+                    <input type="hidden" name="system.skills.{{s}}.value"
+                           value="{{skill.baseValue}}" data-dtype="Number">
+                    <input type="hidden" name="system.skills.{{s}}.ability" value="{{skill.ability}}">
+                    <a class="proficiency-toggle skill-proficiency" data-tooltip="{{skill.hover}}">{{{skill.icon}}}</a>
                     <div class="skill-name-controls">
-                      <h4 class="skill-name rollable">{{label}}</h4>
-                      <a class="config-button" data-action="skill" title="{{localize 'DND5E.SkillConfigure'}}"><i class="fas fa-cog"></i></a>
+                      <h4 class="skill-name rollable">{{skill.label}}</h4>
+                      <a class="config-button" data-action="skill" data-tooltip="DND5E.SkillConfigure">
+                          <i class="fas fa-cog"></i>
+                      </a>
                     </div>
-                    <span class="skill-ability">{{skill.ability}}</span>
-                    <span class="skill-mod" title="{{ localize 'DND5E.SkillModifierHint' skill=label }}">{{numberFormat skill.total decimals=0 sign=true}}</span>
-                    <span class="skill-passive" title="{{ localize 'DND5E.SkillPassiveHint' skill=label }}">({{skill.passive}})</span>
+                    <span class="skill-ability">{{skill.abbreviation}}</span>
+                    <span class="skill-mod" data-tooltip="{{localize 'DND5E.SkillModifierHint' skill=skill.label}}">
+                        {{numberFormat skill.total decimals=0 sign=true}}
+                    </span>
+                    <span class="skill-passive" data-tooltip="{{localize 'DND5E.SkillPassiveHint' skill=skill.label}}">
+                        ({{skill.passive}})
+                    </span>
                 </li>
             {{/with}}
             {{/each}}
@@ -194,20 +217,18 @@
                     {{#each resources as |res|}}
                     <li class="attribute resource">
                         <h4 class="attribute-name box-title">
-                            <input name="data.resources.{{res.name}}.label" type="text" value="{{res.label}}"
+                            <input name="system.resources.{{res.name}}.label" type="text" value="{{res.label}}"
                                    placeholder="{{res.placeholder}}" />
                         </h4>
                         <div class="attribute-value">
                             <label class="recharge checkbox flexcol">
-                                <span>{{ localize "DND5E.AbbreviationSR" }}</span><input name="data.resources.{{res.name}}.sr" type="checkbox" {{checked res.sr}}/>
+                                <span>{{ localize "DND5E.AbbreviationSR" }}</span><input name="system.resources.{{res.name}}.sr" type="checkbox" {{checked res.sr}}/>
                             </label>
-
-                            <input name="data.resources.{{res.name}}.value" type="number" value="{{res.value}}" placeholder="0"/>
+                            <input type="text" name="system.resources.{{res.name}}.value" value="{{res.value}}" placeholder="0" data-dtype="Number">
                             <span class="sep"> / </span>
-                            <input name="data.resources.{{res.name}}.max" type="number" value="{{res.max}}" placeholder="0"/>
-
+                            <input type="text" name="system.resources.{{res.name}}.max" value="{{res.max}}" placeholder="0" data-dtype="Number">
                             <label class="recharge checkbox flexcol">
-                                <span>{{ localize "DND5E.AbbreviationLR" }}</span><input name="data.resources.{{res.name}}.lr" type="checkbox" {{checked res.lr}}/>
+                                <span>{{ localize "DND5E.AbbreviationLR" }}</span><input name="system.resources.{{res.name}}.lr" type="checkbox" {{checked res.lr}}/>
                             </label>
                         </div>
                     </li>
@@ -220,52 +241,49 @@
                         <h4 class="rollable" data-action="rollDeathSave">{{ localize "DND5E.DeathSave" }}</h4>
                         <div class="counter-value">
                             <i class="fas fa-check"></i>
-                            <input name="data.attributes.death.success" type="number" placeholder="0"
-                                   value="{{data.attributes.death.success}}">
+                            <input type="text" name="system.attributes.death.success" value="{{system.attributes.death.success}}" placeholder="0" data-dtype="Number">
                             <i class="fas fa-times"></i>
-                            <input name="data.attributes.death.failure" type="number" placeholder="0"
-                                   value="{{data.attributes.death.failure}}">
+                            <input type="text" name="system.attributes.death.failure" value="{{system.attributes.death.failure}}" placeholder="0" data-dtype="Number">
                         </div>
                     </div>
                     <div class="counter flexrow exhaustion">
                         <h4>{{ localize "DND5E.Exhaustion" }}</h4>
                         <div class="counter-value">
-                            <input name="data.attributes.exhaustion" type="number" placeholder="0"
-                                   value="{{data.attributes.exhaustion}}" />
+                            <input type="text" name="system.attributes.exhaustion" value="{{system.attributes.exhaustion}}" placeholder="0" data-dtype="Number">
                         </div>
                     </div>
                     <div class="counter flexrow inspiration">
                         <h4>{{ localize "DND5E.Inspiration" }}</h4>
                         <div class="counter-value">
-                            <input type="checkbox" name="data.attributes.inspiration" data-dtype="Boolean"
-                                   {{checked data.attributes.inspiration}}/>
+                            <input type="checkbox" name="system.attributes.inspiration" data-dtype="Boolean"
+                                   {{checked system.attributes.inspiration}}/>
                         </div>
                     </div>
                 </div>
 
                 {{!-- Traits --}}
-                {{> "systems/dnd5e/templates/actors/parts/actor-traits.html"}}
+                {{> "dnd5e.actor-traits"}}
             </section>
         </div>
 
         {{!-- Inventory Tab --}}
         <div class="tab inventory flexcol" data-group="primary" data-tab="inventory">
-            {{> "systems/dnd5e/templates/actors/parts/actor-inventory.html" sections=inventory}}
+            {{> "dnd5e.actor-inventory" sections=inventory}}
         </div>
 
         {{!-- Features Tab --}}
         <div class="tab features flexcol" data-group="primary" data-tab="features">
-            {{> "systems/dnd5e/templates/actors/parts/actor-features.html" sections=features}}
+            {{> "dnd5e.actor-features" sections=features}}
         </div>
 
         {{!-- Spellbook Tab --}}
         <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
-          {{> "systems/dnd5e/templates/actors/parts/actor-spellbook.html"}}
+            {{> "dnd5e.actor-spellbook"}}
         </div>
 
         {{!-- Effects Tab --}}
         <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-            {{> "systems/dnd5e/templates/actors/parts/active-effects.html"}}
+            {{> "dnd5e.active-effects"}}
         </div>
 
         {{!-- Biography Tab --}}
@@ -276,18 +294,18 @@
                 {{> "modules/symbaroum5ecore/templates/actors/parts/actor-shadow.html"}}
 
                 <label>{{ localize "DND5E.Appearance" }}</label>
-                <textarea name="data.details.appearance">{{data.details.appearance}}</textarea>
+                <textarea name="system.details.appearance">{{system.details.appearance}}</textarea>
                 <label>{{ localize "DND5E.PersonalityTraits" }}</label>
-                <textarea name="data.details.trait">{{data.details.trait}}</textarea>
+                <textarea name="system.details.trait">{{system.details.trait}}</textarea>
                 <label>{{ localize "DND5E.Ideals" }}</label>
-                <textarea name="data.details.ideal">{{data.details.ideal}}</textarea>
+                <textarea name="system.details.ideal">{{system.details.ideal}}</textarea>
                 <label>{{ localize "DND5E.Bonds" }}</label>
-                <textarea name="data.details.bond">{{data.details.bond}}</textarea>
+                <textarea name="system.details.bond">{{system.details.bond}}</textarea>
                 <label>{{ localize "DND5E.Flaws" }}</label>
-                <textarea name="data.details.flaw">{{data.details.flaw}}</textarea>
+                <textarea name="system.details.flaw">{{system.details.flaw}}</textarea>
             </div>
             <div class="biography">
-                {{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable rollData=rollData}}
+              {{editor enrichedBio target="system.details.biography.value" button=true editable=editable engine="prosemirror"}}
             </div>
         </div>
     </section>
